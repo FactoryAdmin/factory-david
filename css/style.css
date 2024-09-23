@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #1e1e1f, #909396, #1e1e1f);
+}
+
+
+/*tarjeta de login*/
+.login-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 30px rgb(59, 59, 59);
+    width: 450px;
+    height: 450px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.container-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.user-logo {
+    height: 100px;
+}
+
+.main-input {
+    width: 300px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px rgb(0, 0, 0);
+}
+
+.main-input:focus {
+    border-bottom: solid 1px rgb(163, 161, 161);
+    box-shadow: 0 0 3px grey;
+}
+
+.login-button {
+    width: 100px;
+    padding: 5px 15px;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+}

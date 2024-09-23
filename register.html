@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/register.css">
+    <title>Registrarse</title>
+</head>
+
+<body>
+    <main class="formContainer">
+        <h1>Registrarse</h1>
+        <div class="formContainer">
+            <form action="./success.html" method="GET" class="form-register">
+                <input type="text" name="name" id="name-id" placeholder="Nombre" required>
+                <input type="text" name="lastname" id="lastname-id" placeholder="Apellido" required>
+                <div class="duo-container">
+                    <select name="dni-type" id="dni-id" required>
+                        <option value="dni">DNI</option>
+                        <option value="lci">Libreta cívica</option>
+                    </select>
+                    <input type="number" name="number" id="number-id" placeholder="Número" required>
+                </div>
+                <div class="birth-container">
+                    <label for="birth">Fecha de nacimiento</label>
+                    <input type="date" name="birth" id="birth-id" required>
+                </div>
+                <input type="email" name="email" id="email-id" placeholder="Email" required>
+                <input type="number" name="phone" id="phone-id" placeholder="Teléfono" required>
+                <input type="password" name="password" id="password-id" placeholder="Contraseña" required>
+                <div class="duo-container">
+                    <input type="submit" value="Enviar" class="button">
+                    <input type="reset" value="Borrar" class="button">
+                </div>
+            </form>
+            <div class="back-link">
+                <a href="./index.html">Volver</a>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
