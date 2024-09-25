@@ -16,17 +16,16 @@ body {
 .formContainer {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     box-shadow: 0 5px 30px rgb(59, 59, 59);
     width: 400px;
-    height: 550px;
+    /* height: 550px; saqué el alto para que el contenedor se amolde al contenido y no se salga nada*/
     background-color: white;
     border-radius: 5px;
 }
 
 h1 {
-    padding: 10px;
+    padding: 15px;
 }
 
 .form-register {
@@ -42,6 +41,7 @@ h1 {
 .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
 .duo-container {
