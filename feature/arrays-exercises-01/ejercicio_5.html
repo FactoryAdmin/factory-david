@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        /*  5 - Declarar un array vacío, este array deberán completarse con los datos que 
+    escriba el usuario usando promps. Si el usuario escribe más de un nombre 
+    separado por coma, deberán agregarse los dos. Ejemplo: Carlos, Juan
+    los nombres deberán mostrarse en pantalla con document.write y cada vez que se
+    coloque un nuevo nombre deberá actualizarse la lista. */
+
+    const names = [];
+
+    const addNames = function() {
+        conf = confirm(`Desea agregar un nuevo nombre a la lista?`);
+
+        if(!conf) {
+            alert(`No se agregaron datos`);
+            return;
+        }
+        
+        if(conf) {
+            newName = prompt(`Ingrese un nombre`);
+            const separateName = newName.split(",");
+
+            separateName.forEach(name => {
+                names.push(name);
+            });
+            alert(`Dato ingresado correctamente`)
+            return document.write(names);
+        } 
+
+        /* if(conf) {
+            newName = prompt(`Ingrese un nombre`);
+            names = newName.split(",");
+
+            alert(`Dato ingresado correctamente`)
+            return document.write(names);
+        } */
+
+        
+    }
+
+    addNames();
+
+    </script>
+</body>
+</html>
