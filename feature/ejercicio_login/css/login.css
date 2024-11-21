@@ -67,7 +67,20 @@ body {
 
 #errorMsg {
     background-color: rgb(192, 59, 59);
-    display: none;
+    visibility: hidden;
     padding: 5px;
     border-radius: 5px;
+    opacity: 0;
+    transform: translateY(-10px); /* Efecto de desplazamiento hacia arriba */
+    transition: opacity 0.5s ease, transform 0.3s ease, visibility 0.3s ease; 
+}
+
+#errorMsg.errorMsg-show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.errorBorderStyle{
+    border:  solid 2px rgb(192, 59, 59);
 }

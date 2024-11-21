@@ -13,45 +13,47 @@ const $username = document.getElementById('user');
 const $password = document.getElementById('pass');
 const $spanError = document.getElementById('errorMsg');
 
+const removeInputSpace = value=> value.trim();
 
-const userIsValid = function () {
 
-    if (!$username.value && !$password.value) {
-        $spanError.style.display = 'block';
+const isFormValuesValid = function () {
+
+    if (!removeInputSpace($username.value) && !removeInputSpace($password.value)) {
+        $spanError.classList.add("errorMsg-show");
         $spanError.textContent = 'Los campos están vacíos';
-        $username.style.border = 'solid 2px rgb(192, 59, 59)';
-        $password.style.border = 'solid 2px rgb(192, 59, 59)';
+        $username.classList.add("errorBorderStyle");
+        $password.classList.add("errorBorderStyle");
         return false;
     }
 
-    if (!$username.value || !$password.value) {
-        $spanError.style.display = 'block';
+    if (!removeInputSpace($username.value) || !removeInputSpace($password.value)) {
+        $spanError.classList.add("errorMsg-show");
         $spanError.textContent = 'Algunos de los campos está vacío';
-        $username.style.border = 'solid 2px rgb(192, 59, 59)';
-        $password.style.border = 'solid 2px rgb(192, 59, 59)';
+        $username.classList.add("errorBorderStyle");
+        $password.classList.add("errorBorderStyle");
         return false;
     }
 
-    if ($username.value.length <= 3) {
-        $spanError.style.display = 'block';
+    if (removeInputSpace($username.value).length <= 3) {
+        $spanError.classList.add("errorMsg-show");
         $spanError.textContent = 'El usuario debe tener mas de 3 caracteres';
-        $username.style.border = 'none';
-        $password.style.border = 'none';
+        $username.classList.remove("errorBorderStyle");
+        $password.classList.remove("errorBorderStyle");
         return false;
     }
 
-    if ($password.value.length <= 3) {
-        $spanError.style.display = 'block';
+    if (removeInputSpace($password.value).length <= 3) {
+        $spanError.classList.add("errorMsg-show");
         $spanError.textContent = 'La contraseña debe tener mas de 3 caracteres';
-        $username.style.border = 'none';
-        $password.style.border = 'none';
+        $username.classList.remove("errorBorderStyle");
+        $password.classList.remove("errorBorderStyle");
         return false;
     }
 
-    $spanError.style.display = 'none';
+    $spanError.classList.remove("errorMsg-show");
     $spanError.textContent = '';
-    $username.style.border = 'none';
-    $password.style.border = 'none';
+    $username.classList.remove("errorBorderStyle");
+    $password.classList.remove("errorBorderStyle");
 
 
     return true;
@@ -62,7 +64,7 @@ const userExist = function () {
     const userOk = users.some(user => user.user === $username.value && user.pass === $password.value);
 
     if (!userOk) {
-        $spanError.style.display = 'block';
+        $spanError.classList.add("errorMsg-show");
         $spanError.textContent = 'El usuario o contraseña son incorrectos';
         return false;
     }
@@ -71,53 +73,16 @@ const userExist = function () {
 }
 
 
-const deleteUserSpace = function () {
-    const userArraySpace = $username.value.split("");
 
 
-    if (userArraySpace[userArraySpace.length - 1] === " ") {
-        userArraySpace.pop();
-        $username.value = userArraySpace.join("");
-    }
+function login(event) {
+    event.preventDefault();
 
-
-
-    //hice esto primero pero queda raro que elimine todos los espacios
-    /* const noSpace = userArraySpace.filter(word => word !== " ").join("");
-    $username.value = noSpace; */
-
-    return;
-}
-
-const deletePasswordSpace = function () {
-    const passArraySpace = $password.value.split("");
-
-    if (passArraySpace[passArraySpace.length - 1] === " ") {
-        passArraySpace.pop();
-        $password.value = passArraySpace.join("");
-    }
-
-    return;
-}
-
-
-
-
-function login() {
-    deleteUserSpace();
-    deletePasswordSpace();
-
-    if (userIsValid() === false) {
+    if (!isFormValuesValid() || !userExist() ) {
         return;
     }
 
-    if (userExist() === false) {
-        return;
-    }
-
-    redirectTo();
-
-    return;
+    return redirectTo();
 }
 
 

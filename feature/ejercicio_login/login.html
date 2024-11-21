@@ -9,12 +9,12 @@
 <body>
     <main class="login-card">
         <h1 class="login-title">Factory</h1>
-        <div class="container-form">
+        <form class="container-form" onsubmit="login(event)">
             <input type="text" id="user" placeholder="Usuario" class="main-input">
             <input type="password" id="pass" placeholder="Contraseña" class="main-input">
-            <button class="login-button" onclick="login()" type="button">Ingresar</button>
+            <button class="login-button">Ingresar</button>
             <span id="errorMsg"></span>
-        </div>
+        </form>
     </main>
     <script src="./dom/dom.js"></script>
 </body>
