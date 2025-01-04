@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', initialData)
+
 const btnClasses = {
     primary: 'primaryBtn',
     warning: 'warningBtn',
@@ -6,73 +8,78 @@ const btnClasses = {
 
 const DEFAULT_STYLE_BTN = 'primaryBtn';
 
-const $deleteBtn = document.getElementById('deleteBtn');
-const $modal = document.getElementById('modal');
-const $closeModal = document.getElementById('closeModal');
+
+const modalConfig = {
+    modal: document.getElementById('modal'),
+    deleteButton: document.getElementById('deleteBtn'),
+    closeButton: document.getElementById('closeModal'),
+    userIdField: document.getElementById('userId')
+};
+
 
 function initialData() {
     $tbodyMainTable.innerHTML = '';
-
     usersData.forEach((userData) => {
-        let $row = document.createElement('tr');
-        for (const prop in userData) {
-            let $td = document.createElement('td');
-            $td.textContent = userData[prop];
-            $row.appendChild($td);
-        }
-        
-        let $actionsTd = document.createElement('td');
-        
-        $actionsTd.appendChild( generateButton('Eliminar','error', () => deleteUserModal(userData)));//CAMBIE
-        $actionsTd.appendChild( generateButton('Modificar','primary', ''));
-
-        $row.appendChild($actionsTd);
+        const $row = createUserRow(userData);
         $tbodyMainTable.appendChild($row);
-    })
+    });
+}
+
+function createUserRow(userData) {
+    const $row = document.createElement('tr');
+    Object.values(userData).forEach(value => {
+        const $td = document.createElement('td');
+        $td.textContent = value;
+        $row.appendChild($td);
+    });
+
+    const $actionsTd = document.createElement('td');
+    $actionsTd.appendChild(generateButton('Eliminar', 'error', () => confirmDeleteItem(userData)));
+    $actionsTd.appendChild(generateButton('Modificar', 'primary', () => {}));
+
+    $row.appendChild($actionsTd);
+    return $row;
 }
 
 
 function generateButton(btnName,classBtn,actionBtn) {
     
-    let $buttons = document.createElement('button');
-    $buttons.textContent = btnName;
-
-    if(btnName === 'Eliminar') {
-        //AGREGUE ESTO DE ACA ABAJO
-        $buttons.addEventListener('click',()=>{
-            $modal.showModal();
-        })
-        //AGREGUE ESTO DE ACA PARA CERRAR MODAL DESP DE ELIMINAR
-        $modal.close(); 
-    }
-
-    let classToAdd = btnClasses.hasOwnProperty(classBtn) ? btnClasses[classBtn] : DEFAULT_STYLE_BTN;
-    $buttons.classList.add(classToAdd); 
-
-    $buttons.onclick = actionBtn;   // usar el addEventListener
-    /* $buttons.addEventListener('click', actionBtn); */ //SI LO CAMBIO A ESTO, NO ME FUNCIONA
-
-    return $buttons;
+    let $button = document.createElement('button');
+    $button.textContent = btnName;
+    $button.classList.add(btnClasses[classBtn] || DEFAULT_STYLE_BTN);
+    $button.addEventListener('click', actionBtn);
+    return $button;
 }
 
 
-function deleteUser(userId) {
-    const newUsersData = usersData.filter(user => user.userId != userId);
-    usersData = newUsersData;
+function closeModal() {
+    modalConfig.modal.close();
+}
+
+
+
+function deleteUser() {
+    const userId = modalConfig.deleteButton.getAttribute('data-user-id');
+    usersData = usersData.filter(user => user.userId !== userId);
+    closeModal();
     initialData();
-};
-
-//TRATAR DE HACER UNA FUNCION PARA EL DELETE USER DONDE SALGA UN MODAL
-
-function deleteUserModal(userData) {
-    const {userId} = userData;
-    document.getElementById('index').textContent = userId;
-    $deleteBtn.addEventListener('click', ()=> deleteUser(userId));
-    //AGREGUE ESTO DE ACA ABAJO
-    $closeModal.addEventListener('click', ()=> {
-        $modal.close();
-    })
 }
+
+function setupModalEvents() {
+    modalConfig.deleteButton.addEventListener('click', deleteUser);
+    modalConfig.closeButton.addEventListener('click', closeModal);
+}
+
+
+
+function confirmDeleteItem(userData) {
+    const { userId } = userData;
+    modalConfig.userIdField.textContent = userId;
+    modalConfig.deleteButton.setAttribute('data-user-id', userId);
+    modalConfig.modal.showModal();
+}
+
+setupModalEvents();
 
 
 

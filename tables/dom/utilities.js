@@ -5,6 +5,3 @@ let usersData = [
     {userId: '2', username: 'userTwo'},
     {userId: '3', username: 'userThree'}
 ];
-
-
-initialData();
