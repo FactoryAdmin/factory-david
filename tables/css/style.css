@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tableStyle {
+    width: 100%;
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+
+.tableStyle td {
+    padding: 3px;
+}
+
+#mainTable > thead {
+    background-color: bisque;
+}
+
+#tbodyMainTable {
+    background-color: rgb(53, 51, 51);
+    color: whitesmoke;
+    text-align: center;
+    
+}
+
+
+.primaryBtn {
+    border: none;
+    border-radius: 5px;
+    background-color: lightblue;
+    width: 75px;
+    transition: background-color 0.3s ease, font-weight 0.2s ease;
+}
+
+.primaryBtn:hover {
+    background-color: rgb(112, 193, 221);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.warningBtn {
+    border: none;
+    border-radius: 5px;
+    background-color: yellow;
+    color: black;
+    width: 75px;
+    transition: background-color 0.3s ease, font-weight 0.2s ease;
+}
+
+.warningBtn:hover {
+    background-color: rgb(224, 224, 69);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.errorBtn {
+    border: none;
+    border-radius: 5px;
+    background-color: red;
+    color: black;
+    width: 75px;
+    transition: background-color 0.3s ease, font-weight 0.2s ease;
+}
+
+.errorBtn:hover {
+    background-color: rgb(180, 26, 26);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    
+}
+
+/* Estilo para el backdrop */
+.modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.text-modal {
+    padding: 20px;
+}
+
+.btnModal-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-Cancelbtn {
+    border: none;
+    width: 75px;
+    border-radius: 5px;
+    background-color: rgb(206, 205, 205);
+    transition: background-color 0.3s ease, font-weight 0.2s ease;
+}
+
+.modal-Cancelbtn:hover {
+    cursor: pointer;
+    background-color: grey;
+    font-weight: 600;
+}
