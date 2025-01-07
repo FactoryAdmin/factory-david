@@ -115,3 +115,20 @@
     background-color: grey;
     font-weight: 600;
 }
+
+.pagination-containerStyle {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    
+}
+
+.pages-style {
+    color: black;
+    font-size: 24px;
+}
+
+.pages-style:hover {
+    color: grey;
+}

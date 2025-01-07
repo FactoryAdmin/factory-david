@@ -1,21 +1,5 @@
 document.addEventListener('DOMContentLoaded', initialData)
 
-const btnClasses = {
-    primary: 'primaryBtn',
-    warning: 'warningBtn',
-    error: 'errorBtn'
-};
-
-const DEFAULT_STYLE_BTN = 'primaryBtn';
-
-
-const modalConfig = {
-    modal: document.getElementById('modal'),
-    deleteButton: document.getElementById('deleteBtn'),
-    closeButton: document.getElementById('closeModal'),
-    userIdField: document.getElementById('userId')
-};
-
 
 function initialData() {
     $tbodyMainTable.innerHTML = '';
@@ -79,7 +63,24 @@ function confirmDeleteItem(userData) {
     modalConfig.modal.showModal();
 }
 
-setupModalEvents();
 
+
+function createPagination() {
+    const pagesQuantities = usersData.length / 5;
+
+    for (let index = 1; index <= Math.ceil(pagesQuantities); index++) {
+
+        let $pages = document.createElement('a');
+        $pages.setAttribute('href', '#');
+        $pages.textContent = index;
+        $pages.classList.add('pages-style');
+        $paginationContainer.classList.add('pagination-containerStyle');
+        $paginationContainer.appendChild($pages);
+        
+    }
+}
+
+setupModalEvents();
+createPagination();
 
 
