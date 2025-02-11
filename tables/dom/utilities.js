@@ -1,6 +1,7 @@
 const $tbodyMainTable = document.getElementById('tbodyMainTable');
 
 let usersData = [
+
     { userId: '1', username: 'userOne', age: 25, email: 'userone@example.com' },
     { userId: '2', username: 'userTwo', age: 30, email: 'usertwo@example.com' },
     { userId: '3', username: 'userThree', age: 27, email: 'userthree@example.com' },
@@ -80,5 +81,6 @@ const editModalConfig = {
     editUserEmail: document.getElementById('editUserEmail'),
     modifyUser: document.getElementById('modifyUser')
 }
+
 
 const $paginationContainer = document.getElementById('pagination-container');

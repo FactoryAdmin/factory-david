@@ -4,11 +4,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     showRecordsPerPage(1);
 });
 
+
 let newArrayDataTwo = usersData;
 
 
 function initialData(newArrayData=newArrayDataTwo) {
     $tbodyMainTable.innerHTML = '';
+
 
     newArrayData.forEach((userData) => {
         const $row = createUserRow(userData);
@@ -31,9 +33,11 @@ function createUserRow(userData) {
     $actionsTd.appendChild(generateButton('Modificar', 'btn-primary', () => editUser(userData), {dataTarget:'#confirmModifyModal', dataToggle:'modal'}));
     $actionsTd.appendChild(generateButton('Eliminar', 'btn-danger', () => confirmDeleteItem(userData), {dataTarget:"#confirmDeleteModal", dataToggle:'modal'}));
 
+
     $row.appendChild($actionsTd);
     return $row;
 }
+
 
 
 function generateButton(btnName, classBtn, actionBtn, modalConfigs=null) {
@@ -54,9 +58,11 @@ function generateButton(btnName, classBtn, actionBtn, modalConfigs=null) {
 }
 
 
+
 /* function closeModal() {
     modalConfig.modal.close();
 } */
+
 
 
 
@@ -67,11 +73,13 @@ function deleteUser() {
     newArrayDataTwo = usersData;
     /* initialData(); */
     showRecordsPerPage(1);
+
 }
 
 function setupModalEvents() {
     modalConfig.deleteButton.addEventListener('click', deleteUser);
     /* modalConfig.closeButton.addEventListener('click', closeModal); */
+
 }
 
 
@@ -80,6 +88,7 @@ function confirmDeleteItem(userData) {
     const { userId } = userData;
     modalConfig.userIdField.textContent = userId;
     modalConfig.deleteButton.setAttribute('data-user-id', userId);
+
 };
 
 function editUser(userData) {
@@ -130,6 +139,7 @@ function emailValidator() {
     }
 
     return true;
+
 }
 
 
@@ -137,6 +147,7 @@ function emailValidator() {
 function createPagination() {
     const registerToShow = 10;
     const pagesQuantities = Math.ceil(usersData.length / registerToShow); /* corregir renderizado */
+
 
     for (let index = 1; index <= pagesQuantities; index++) {
 
@@ -167,10 +178,12 @@ function showRecordsPerPage(currentPage) {
     const size = 10;
     const lastIndex = currentPage * size;
     const firstIndex = lastIndex - size;
+
     const newArrayData = newArrayDataTwo.slice(firstIndex, lastIndex);
 
 
     /* newArrayDataTwo = newArrayData; */
+
     initialData(newArrayData);
     activePage(currentPage);
 }
