@@ -4,8 +4,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     showRecordsPerPage(1);
 });
 
+let newArrayDataTwo = usersData;
 
-function initialData(newArrayData) {
+
+function initialData(newArrayData=newArrayDataTwo) {
     $tbodyMainTable.innerHTML = '';
 
     newArrayData.forEach((userData) => {
@@ -62,7 +64,9 @@ function deleteUser() {
     const userId = modalConfig.deleteButton.getAttribute('data-user-id');
     usersData = usersData.filter(user => user.userId !== userId);
     /* closeModal(); */
-    /* initialData(usersData); */
+    newArrayDataTwo = usersData;
+    /* initialData(); */
+    showRecordsPerPage(1);
 }
 
 function setupModalEvents() {
@@ -79,24 +83,60 @@ function confirmDeleteItem(userData) {
 };
 
 function editUser(userData) {
-    /* const { userId } = userData;
-    editModalConfig.editUserField.textContent = userId; */
-    const { username } = userData;
-    editModalConfig.editUsername.setAttribute('placeholder', username)
-
-    const { email } = userData;
+    const { username, email } = userData;
+    editModalConfig.editUsername.setAttribute('placeholder', username);
     editModalConfig.editUserEmail.setAttribute('placeholder', email);
 
-    editModalConfig.modifyUser.addEventListener('click', updateUserModify);
+    editModalConfig.modifyUser.addEventListener('click', () => updateUserModify());
 }
 
 function updateUserModify() {
-    console.log('modificando datos')
+    const username = modalConfig.editUsername;
+    const email = modalConfig.editUserEmail;
+
+
+    if(usernameValidator(username) && emailValidator(email)) {
+        console.log('modificando datos');
+    }
+    
 }
+
+
+function usernameValidator(username) {
+    if(!username) {
+        console.log('Por favor ingrese un usuario');
+        return;
+    }
+
+    let regex = /^[a-zA-Z0-9]+$/;
+    if(!regex.test(modalConfig.editUsername)) {
+        console.log('El username no debe tener caracteres especiales como {[@$%^&?_');
+        return;
+    }
+
+    return true;
+}
+
+function emailValidator() {
+    if(!modalConfig.editUserEmail) {
+        console.log('Por favor ingrese un email');
+        return
+    }
+
+    let regex = /^[^@]+@[^@]+\.com$/;
+    if(!regex.test(modalConfig.editUserEmail)) {
+        console.log('El username no debe tener caracteres especiales como {[@$%^&?_');
+        return;
+    }
+
+    return true;
+}
+
+
 
 function createPagination() {
     const registerToShow = 10;
-    const pagesQuantities = Math.ceil(usersData.length / registerToShow);
+    const pagesQuantities = Math.ceil(usersData.length / registerToShow); /* corregir renderizado */
 
     for (let index = 1; index <= pagesQuantities; index++) {
 
@@ -127,10 +167,10 @@ function showRecordsPerPage(currentPage) {
     const size = 10;
     const lastIndex = currentPage * size;
     const firstIndex = lastIndex - size;
-    const newArrayData = usersData.slice(firstIndex, lastIndex);
+    const newArrayData = newArrayDataTwo.slice(firstIndex, lastIndex);
 
 
-    
+    /* newArrayDataTwo = newArrayData; */
     initialData(newArrayData);
     activePage(currentPage);
 }
