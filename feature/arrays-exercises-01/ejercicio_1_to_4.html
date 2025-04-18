@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /* 1 - Dado el siguiente array: [1, 2, 3, 4, 5, 6], ejecutar un método de los
+    aprendidos para saber si todos los elementos que contiene son 
+    números pares.*/
+
+        let numArray = [1, 2, 3, 4, 5, 6];
+
+        let arrayPar = numArray.every(num => num % 2 === 0);//uso every para saber si TODOS son pares
+
+        console.log(`ejercicio 1: ${arrayPar}`);
+
+
+
+        /* 2 - Dado el siguiente array: [1, 2, 3, 4, 5, 6], ejecutar un método de los
+    aprendidos para saber si alguno de los elementos que contiene son 
+    números pares.*/
+
+        let arrayPar2 = numArray.some(num => num % 2 === 0);//uso some para saber si algun dato es par
+
+        console.log(`Ejercicio 2: ${arrayPar2}`);
+
+        /*3 - Dado el siguiente array: [1, 2, 3, 4, 5, 6], ejecutar un método de los
+    aprendidos para recorrer el array y en caso de que encuentre un número 
+    par imprima en consola "El número x es par" caso contrario 
+    "El número x no es par"*/
+
+        numArray.forEach(num => {
+            if (num % 2 === 0) {
+                console.log(`El numero ${num} es par`); 
+                return;
+            }
+
+            console.log(`El numero ${num} es impar`);
+            return;
+
+        
+        });
+
+
+        /*4 - Dado el siguiente string: 2024-11-01, utilizar alguno de los métodos aprendidos
+    para mostrarlo en consola de la siguiente manera: 01/11/2024 */
+
+        let date = '2024-11-01';
+
+        const newDate = date.split("-").reverse().join("/");
+
+        console.log(newDate);
+
+    </script>
+</body>
+
+</html>

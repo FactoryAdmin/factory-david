@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 6 - Declarar un array vacío, este array deberán completarse con los datos que 
+  escriba el usuario usando promps, Si el nombre existe en el array, deberá informarse al 
+  usuario que ya existe y preguntar si desea "eliminarlo y agregar el 
+  nuevo valor", si el usuario acepta, se deberá eliminar de la lista el dato existente
+  y agregar el nuevo valor al final, caso contraro no realizar ninguna acción.
+  Los nombres deberán mostrarse en pantalla con document.write y cada vez que se
+  coloque un nuevo nombre deberá actualizarse la lista. */
+
+        const arrayName = [];
+
+        const addName = function () {
+            confirmAdd = confirm(`Desea ingresar un nuevo nombre a su lista?`);
+
+            if (!confirmAdd) {
+                alert(`No se ingresaron datos nuevos a su lista`);
+                return;
+            }
+
+            newName = prompt(`Ingrese el nombre nuevo`);
+
+            const nameExist = arrayName.indexOf(newName); //verifico si existe el nombre en el array, si es falso retorna -1
+
+            if(nameExist !== -1) {
+                conf = confirm(`Este nombre ya existe, desea eliminarlo y agregar el nuevo valor ingresado?`);
+                
+                if(!confirm) {
+                    alert(`No se agregaron datos nuevos`);
+                    return;
+                }
+
+                arrayName.splice(nameExist,1); //desde la posicion del nombre que ya existe elimina ese dato
+                arrayName.push(newName);
+                
+            } else {
+                arrayName.push(newName);
+            }
+
+            document.write(`${arrayName} </br>`);
+            console.log(arrayName)
+            addName();
+        }
+
+        addName();
+    </script>
+</body>
+
+</html>
