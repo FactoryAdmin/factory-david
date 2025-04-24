@@ -10,7 +10,7 @@ const $spinner = document.getElementById('spinnerLoad');
 const DEFAULT_STYLE_BTN = 'btn btn-primary';
 let productsData = [];
 const $paginationContainer = document.getElementById('pagination-container');
-let newArrayProductTwo = productsData;
+let productsDataTwo = [];
 const $catchUsername = document.getElementById('user');
 
 

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 
-const getProducts = async () => {
+const getProducts = async (pagenumber=1) => {
     try {
         const options = {
             method: 'GET',
@@ -16,11 +16,12 @@ const getProducts = async () => {
 
         }
         spinnerModal();
-        let response = await fetch(`http://localhost:4000/products/`, options);
+        let response = await fetch(`http://localhost:4000/products/?page=${pagenumber}`, options);
         let data = await response.json();
         
 
         productsData = data;
+        console.log(productsData)
         
         initialData(productsData);
         createPagination();
@@ -38,9 +39,9 @@ function getUser() {
 }
 
 
-function initialData(productsData=newArrayProductTwo) {
+function initialData(productsData) {
     $mainTable.innerHTML = '';
-    productsData.forEach(product => {
+    productsData.values.forEach(product => {
         const $row = createProductRow(product);
         $mainTable.appendChild($row);
     });
@@ -155,10 +156,10 @@ function updateProductModify(product) {
 
 function createPagination() {
     $paginationContainer.innerHTML = '';
-    const registerToShow = 10;
-    const pagesQuantities = Math.ceil(productsData.length / registerToShow); 
-    
-    for (let index = 1; index <= pagesQuantities; index++) {
+    /* const registerToShow = 10;
+    const pagesQuantities = Math.ceil(productsData.length / registerToShow); */ 
+    console.log(productsData.pages)
+    for (let index = 1; index <= productsData.pages; index++) {
 
         let $pages = document.createElement('a');
         $pages.setAttribute('href', '#');
@@ -187,15 +188,30 @@ function setupPaginationEvents() {
 };
 
 
-function showRecordsPerPage(currentPage) {
-    const size = 10;
+async function showRecordsPerPage(currentPage) {
+    /* const size = 10;
     const lastIndex = currentPage * size;
     const firstIndex = lastIndex - size;
 
-    const newArrayProduct = productsData.slice(firstIndex, lastIndex);
+    const newArrayProduct = productsData.slice(firstIndex, lastIndex); */
+    try {
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
 
-    initialData(newArrayProduct);
-    activePage(currentPage);
+        }
+        spinnerModal();
+        let response = await fetch(`http://localhost:4000/products/?page=${currentPage}`, options);
+        let data = await response.json();
+
+
+        initialData(data);
+        activePage(currentPage);
+    } catch (error) {
+        
+    }
 }
 
 function activePage(currentPage) {
