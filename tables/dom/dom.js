@@ -1,18 +1,16 @@
-document.addEventListener('DOMContentLoaded', /* initialData */ ()=>{
+document.addEventListener('DOMContentLoaded', ()=>{
     createPagination();
     setupPaginationEvents();
     showRecordsPerPage(1);
 });
 
 
-function initialData(newArrayData) {
+let newArrayDataTwo = usersData;
+
+
+function initialData(newArrayData=newArrayDataTwo) {
     $tbodyMainTable.innerHTML = '';
-    /* usersData.forEach((userData) => {
-        const $row = createUserRow(userData);
-        $tbodyMainTable.appendChild($row);
-    }); */
-    /* createPagination();
-    setupPaginationEvents(); */
+
 
     newArrayData.forEach((userData) => {
         const $row = createUserRow(userData);
@@ -29,40 +27,59 @@ function createUserRow(userData) {
     });
 
     const $actionsTd = document.createElement('td');
-    $actionsTd.appendChild(generateButton('Eliminar', 'error', () => confirmDeleteItem(userData)));
-    $actionsTd.appendChild(generateButton('Modificar', 'primary', () => { }));
+    $actionsTd.classList.add('d-flex');
+    $actionsTd.classList.add("gap-3");
+    $actionsTd.classList.add('justify-content-center');
+    $actionsTd.appendChild(generateButton('Modificar', 'btn-primary', () => editUser(userData), {dataTarget:'#confirmModifyModal', dataToggle:'modal'}));
+    $actionsTd.appendChild(generateButton('Eliminar', 'btn-danger', () => confirmDeleteItem(userData), {dataTarget:"#confirmDeleteModal", dataToggle:'modal'}));
+
 
     $row.appendChild($actionsTd);
     return $row;
 }
 
 
-function generateButton(btnName, classBtn, actionBtn) {
+
+function generateButton(btnName, classBtn, actionBtn, modalConfigs=null) {
 
     let $button = document.createElement('button');
     $button.textContent = btnName;
-    $button.classList.add(btnClasses[classBtn] || DEFAULT_STYLE_BTN);
+
+    if(modalConfigs){
+        const {dataTarget,dataToggle} = modalConfigs;
+        $button.setAttribute('data-bs-target',dataTarget);
+        $button.setAttribute('data-bs-toggle',dataToggle);
+    }
+    
+    $button.classList.add('btn'); // agregue esta clase por separado
+    $button.classList.add(classBtn || DEFAULT_STYLE_BTN);
     $button.addEventListener('click', actionBtn);
     return $button;
 }
 
 
-function closeModal() {
+
+/* function closeModal() {
     modalConfig.modal.close();
-}
+} */
+
 
 
 
 function deleteUser() {
     const userId = modalConfig.deleteButton.getAttribute('data-user-id');
     usersData = usersData.filter(user => user.userId !== userId);
-    closeModal();
-    initialData();
+    /* closeModal(); */
+    newArrayDataTwo = usersData;
+    /* initialData(); */
+    showRecordsPerPage(1);
+
 }
 
 function setupModalEvents() {
     modalConfig.deleteButton.addEventListener('click', deleteUser);
-    modalConfig.closeButton.addEventListener('click', closeModal);
+    /* modalConfig.closeButton.addEventListener('click', closeModal); */
+
 }
 
 
@@ -71,14 +88,66 @@ function confirmDeleteItem(userData) {
     const { userId } = userData;
     modalConfig.userIdField.textContent = userId;
     modalConfig.deleteButton.setAttribute('data-user-id', userId);
-    modalConfig.modal.showModal();
+
+};
+
+function editUser(userData) {
+    const { username, email } = userData;
+    editModalConfig.editUsername.setAttribute('placeholder', username);
+    editModalConfig.editUserEmail.setAttribute('placeholder', email);
+
+    editModalConfig.modifyUser.addEventListener('click', () => updateUserModify());
+}
+
+function updateUserModify() {
+    const username = modalConfig.editUsername;
+    const email = modalConfig.editUserEmail;
+
+
+    if(usernameValidator(username) && emailValidator(email)) {
+        console.log('modificando datos');
+    }
+    
+}
+
+
+function usernameValidator(username) {
+    if(!username) {
+        console.log('Por favor ingrese un usuario');
+        return;
+    }
+
+    let regex = /^[a-zA-Z0-9]+$/;
+    if(!regex.test(modalConfig.editUsername)) {
+        console.log('El username no debe tener caracteres especiales como {[@$%^&?_');
+        return;
+    }
+
+    return true;
+}
+
+function emailValidator() {
+    if(!modalConfig.editUserEmail) {
+        console.log('Por favor ingrese un email');
+        return
+    }
+
+    let regex = /^[^@]+@[^@]+\.com$/;
+    if(!regex.test(modalConfig.editUserEmail)) {
+        console.log('El username no debe tener caracteres especiales como {[@$%^&?_');
+        return;
+    }
+
+    return true;
+
 }
 
 
 
 function createPagination() {
     const registerToShow = 10;
-    const pagesQuantities = Math.ceil(usersData.length / registerToShow);
+    const pagesQuantities = Math.ceil(usersData.length / registerToShow); /* corregir renderizado */
+
 
     for (let index = 1; index <= pagesQuantities; index++) {
 
@@ -86,8 +155,8 @@ function createPagination() {
         $pages.setAttribute('href', '#');
         $pages.setAttribute('data-page-id', index);
         $pages.textContent = index;
-        $pages.classList.add('pages-style');
-        $paginationContainer.classList.add('pagination-containerStyle');
+        $pages.classList.add/* ('pages-style') */('page-link');
+        $paginationContainer.classList.add(/* 'pagination-containerStyle' */'pagination');
         $paginationContainer.appendChild($pages);
 
     }
@@ -109,10 +178,12 @@ function showRecordsPerPage(currentPage) {
     const size = 10;
     const lastIndex = currentPage * size;
     const firstIndex = lastIndex - size;
-    const newArrayData = usersData.slice(firstIndex, lastIndex);
+
+    const newArrayData = newArrayDataTwo.slice(firstIndex, lastIndex);
 
 
-    
+    /* newArrayDataTwo = newArrayData; */
+
     initialData(newArrayData);
     activePage(currentPage);
 }
